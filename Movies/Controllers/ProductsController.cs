@@ -74,8 +74,8 @@ namespace Movies.Controllers
                 return NotFound();
             }
 
-            ViewData["catList"] = new SelectList(_context.Categories, "CategoryId", "Name");
             var product = await _context.Products.SingleOrDefaultAsync(m => m.ProductId == id);
+            ViewData["catList"] = new SelectList(_context.Categories, "CategoryId", "Name", product.CategoryId);
             if (product == null)
             {
                 return NotFound();
@@ -88,7 +88,7 @@ namespace Movies.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,Name,Price, CategoryId")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,Name,Price, CategoryId")] Product product, ProductCategory category)
         {
             if (id != product.ProductId)
             {
