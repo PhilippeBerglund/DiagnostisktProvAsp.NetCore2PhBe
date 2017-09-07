@@ -14,5 +14,7 @@ namespace Movies.Models
         [Range(5, 1000, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
         public decimal Price { get; set; }
 
+        public ProductCategory Category { get; set; }
+        public int CategoryId { get; set; }
     }
 }
