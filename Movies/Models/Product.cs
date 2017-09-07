@@ -16,5 +16,6 @@ namespace Movies.Models
 
         public ProductCategory Category { get; set; }
         public int CategoryId { get; set; }
+
     }
 }

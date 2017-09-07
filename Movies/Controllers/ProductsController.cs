@@ -46,6 +46,7 @@ namespace Movies.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+            ViewData["catList"] = new SelectList(_context.Categories, "CategoryId","Name" );
             return View();
         }
 
@@ -54,7 +55,7 @@ namespace Movies.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,Name,Price")] Product product)
+        public async Task<IActionResult> Create([Bind("ProductId,Name,Price, CategoryId")] Product product, ProductCategory category)
         {
             if (ModelState.IsValid)
             {
@@ -73,6 +74,7 @@ namespace Movies.Controllers
                 return NotFound();
             }
 
+            ViewData["catList"] = new SelectList(_context.Categories, "CategoryId", "Name");
             var product = await _context.Products.SingleOrDefaultAsync(m => m.ProductId == id);
             if (product == null)
             {
@@ -86,7 +88,7 @@ namespace Movies.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,Name,Price")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,Name,Price, CategoryId")] Product product)
         {
             if (id != product.ProductId)
             {
